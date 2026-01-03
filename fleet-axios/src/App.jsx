@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,7 +7,8 @@ import Home from './pages/Home'
 import Signup from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
-import Admin from './pages/Admin'
+import FleetDetails from './pages/FleetDetails'
+const Admin = lazy(() => import('./pages/Admin'));
 
 function App() {
 
@@ -20,8 +21,16 @@ function App() {
           <Route path='/login' element={<Login />} />
 
           <Route path='/admin' element={
+            <Suspense fallback={<p>Loading dashboard...</p>}>
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            </Suspense>
+          } />
+
+          <Route path="/fleet/:id" element={
             <ProtectedRoute>
-              <Admin />
+              <FleetDetails />
             </ProtectedRoute>
           } />
 

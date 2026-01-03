@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { createContext } from 'react'
 import { useState } from 'react';
 import api from '../api/api';
@@ -19,20 +19,20 @@ const FleetProvider = ({children}) => {
         setFleets(prev => [{...res.data, id:Date.now()}, ...prev])
     }
 
-    const updateDriver = async (id, driver) => {
+    const updateDriver = useCallback(async (id, driver) => {
         await api.patch(`/posts/${id}`, {driver});
         setFleets(prev => prev.map(f => f.id === id? {...f, driver} : f));
-    }
+    }, [])
 
-    const toggleAvail =  (id) => {
+    const toggleAvail =  useCallback((id) => {
         // await api.patch(`/posts/${id}`);
         setFleets(prev => prev.map(f => f.id === id ? {...f, available:!f.available} : f));
-    }
+    }, [])
 
-    const deleteFleet = async (id) => {
+    const deleteFleet = useCallback(async (id) => {
         await api.delete(`/posts/${id}`);
         setFleets(prev => prev.filter(f => f.id !== id));
-    }
+    }, [])
 
     return (
         <FleetContext.Provider value={{

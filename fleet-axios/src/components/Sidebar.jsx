@@ -12,7 +12,7 @@ const Sidebar = () => {
         reg:'',
         category:'',
         driver:'',
-        available:true
+        available:''
     }) 
     const inputRef = useRef();
 
@@ -22,7 +22,12 @@ const Sidebar = () => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setInputFleet({...inputFleet, [name]:value});
+        // setInputFleet({...inputFleet, [name]:value});
+
+        setInputFleet(prev => ({
+            ...prev,
+            [name]: name === 'available' ? value === 'true' : value
+        }));
     }
 
     const handleSubmit = (e) => {
@@ -38,13 +43,13 @@ const Sidebar = () => {
             reg:'',
             category:'',
             driver:'',
-            available:true
+            available:''
         });
     }
 
   return (
     <>
-        <div>
+        <div className='sidebar'>
             <h2>Fleet Form</h2>
 
             <form onSubmit={handleSubmit}>
@@ -73,11 +78,11 @@ const Sidebar = () => {
                 value={inputFleet.available}
                 onChange={handleChange}>
                     <option value="">Availablity</option>
-                    <option value="Available">Available</option>
-                    <option value="Unavailable">Unavailable</option>
+                    <option value="true">Available</option>
+                    <option value="false">Unavailable</option>
                 </select>
 
-                <button type='submit'>Submit</button>
+                <button type='submit'>Add Fleet</button>
             </form>
         </div>
     </>

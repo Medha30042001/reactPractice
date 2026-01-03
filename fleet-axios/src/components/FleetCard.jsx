@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { useContext } from 'react'
 import { FleetContext } from '../context/FleetContext'
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const FleetCard = ({fleet}) => {
 
@@ -10,15 +11,20 @@ const FleetCard = ({fleet}) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [driverName, setDriverName] = useState(fleet.driver);
+    const navigate = useNavigate();
 
     const saveDriver = () => {
         updateDriver(fleet.id, driverName);
         setIsEditing(false);
     }
 
+    const goToDetails = () => {
+        navigate(`/fleet/${fleet.id}`);
+    }
+
   return (
     <>
-        <div>
+        <div className='fleet-card' onClick={goToDetails}>
            
             <h4>Reg no : {fleet.reg}</h4>
             <p>Category : {fleet.category}</p>
@@ -39,14 +45,18 @@ const FleetCard = ({fleet}) => {
             {!isEditing && (
                 <button onClick={() => setIsEditing(true)}>Update Driver</button>
             )}
-            <button onClick={() => toggleAvail(fleet.id, !fleet.available)}>
+            <button onClick={(e) => {
+                e.stopPropagation();
+                toggleAvail(fleet.id, !fleet.available)}}>
                 Toggle Availability</button>
 
-            <button onClick={() => deleteFleet(fleet.id)}>Delete Fleet</button>
+            <button onClick={(e) => {
+                e.stopPropagation();
+                deleteFleet(fleet.id)}}>Delete Fleet</button>
 
         </div>
     </>
   )
 }
 
-export default FleetCard
+export default memo(FleetCard)
