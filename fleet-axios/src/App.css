@@ -1,0 +1,64 @@
+
+.admin-layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* LEFT */
+.sidebar {
+  width: 260px;
+  background: #f3f3f3;
+  padding: 1rem;
+  border-right: 1px solid #ddd;
+}
+
+/* RIGHT COLUMN */
+.right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar now only spans right side */
+.navbar {
+  height: 60px;
+  border-bottom: 1px solid #ddd;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  background-color: lavender;
+  padding: 10px;
+}
+
+/* Content below navbar */
+.main-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background-color: aquamarine;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* fleet card */
+.fleet-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fleet-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
